@@ -11,16 +11,16 @@ def isBadVersion(version):
 class Solution(object):
 
 	def binsearch(self, lo, hi):
-		
-		if lo < hi:
-			mid = (lo + hi)//2
-			if isBadVersion(mid) == True:
-				return self.binsearch(lo, mid - 1)
-			else:
-				return self.binsearch(mid, hi)
+		if lo > hi:
+			return lo
+			## TODO: Analyse what happens if it meets
+			## lo == hi and isBadVersion(mid) == False Then what will I return??
 		else:
-			##TODO: Analyse what happens if it meets
-				
+			mid = (lo + hi)//2
+			if isBadVersion(mid) == False:
+				return self.binsearch(mid + 1, hi)
+			elif isBadVersion(mid) == True:
+				return self.binsearch(lo, mid - 1)
 
 	def firstBadVersion(self, n):
 		return self.binsearch(1, n)
