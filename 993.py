@@ -8,22 +8,39 @@ class TreeNode(object):
 
 class Solution(object):
 	def isCousins(self, root, x, y):
+
 		lst = []
-		lvl_lst = []
+		parent_nodes = []
 		lst.append(root)
+		parent = [None]
+		prevnode = None
 
 		while(len(lst) != 0):
-			for idx in range(len(lst)): ## Lvl trav
-				node = lst.pop(0)
+			valparentmap = {x: None, y: None}
 
+			lvl_lst = []
+			while(len(lst) != 0): ## Lvl trav
+				node = lst.pop(0)
+				parentnode = parent.pop(0)
+
+				if node.val == x or node.val == y:
+					valparentmap[node.val] = parentnode
+					
 				if node.left != None:
-					lst.append(node.left)
-					lvl_lst.append([node, node.left.val])
+					parent.append(node)
+					lvl_lst.append(node.left)
 				
 				if node.right != None:
-					lst.append(node.right)
-					lvl_lst.append([node, node.right.val])
+					parent.append(node)
+					lvl_lst.append(node.right)
 			
+			if valparentmap[x] != valparentmap[y] and valparentmap[x] != None and valparentmap[y]!= None:
+				return True
+
+			if lvl_lst != []:
+				lst.extend(lvl_lst)
+
+		return False
 
 if __name__ == '__main__':
 	
@@ -31,6 +48,7 @@ if __name__ == '__main__':
 	root.left = TreeNode(2)
 	root.right = TreeNode(3)
 	root.left.left = TreeNode(4)
+	root.right.right = TreeNode(5)
 
 	sol = Solution()
-	print sol.isCousins(root, 2, 3)
+	print(sol.isCousins(root, 5, 4))
