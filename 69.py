@@ -10,7 +10,7 @@ class Solution(object):
 			
 			if mid * mid == x:
 				return mid
-			if mid*mid <= x:
+			if mid * mid <= x:
 				lo = mid + 1
 			else:
 				hi = mid - 1
