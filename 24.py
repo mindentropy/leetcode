@@ -5,45 +5,42 @@ class ListNode(object):
 		self.val = val
 		self.next = next
 
+
 class Solution(object):
 	def swapPairs(self, head):
+		
 		if head == None or head.next == None:
 			return head
 
 		odd = head
-		even = head.next
-		head = even
+		head = head.next
+		prev = None
+		prevpair = None
 
-		oddprev = None
-		evenprev = odd
-		
-		oddnext = None
-		evennext = None
-		
-		while odd != None:
+		while odd != None and odd.next != None:
+			tmp1 = odd.next.next
+			tmp2 = odd.next
+			odd.next = tmp1
+			tmp2.next = odd
+
+			if prevpair != None:
+				prev = prevpair
+				prev.next = tmp2
+
+			prevpair = odd
+			odd = tmp1
 			
-			if even.next == None:
-				evennext = None
-			else:
-				evennext = even.next.next
-
-			oddnext = odd.next.next
-
-			odd.next = evennext
-			even.next = odd
-
-			even = evennext
-			odd = oddnext
-
 		return head
-	#	while head != None:
-	#		print(head.val)
-	#		head = head.next
 
 if __name__ == '__main__':
 	node = ListNode(1)
 	node.next = ListNode(2)
 	node.next.next = ListNode(3)
+#	node.next.next.next = ListNode(4)
 
 	sol = Solution()
-	sol.swapPairs(node)
+	head = sol.swapPairs(node)
+
+	while head != None:
+		print(head.val)
+		head = head.next
